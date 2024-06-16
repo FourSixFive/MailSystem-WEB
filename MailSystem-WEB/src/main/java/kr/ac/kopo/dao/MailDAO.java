@@ -11,6 +11,152 @@ import kr.ac.kopo.vo.MailVO;
 
 public class MailDAO {
 
+	//WEB DAO
+	public List<MailVO> receivedAllMail(String userid) {
+		
+		List<MailVO> mailList = new ArrayList<>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("select no, title, id, to_char(reg_date, 'yyyy-mm-dd')reg_date ");
+		sql.append("  from tbl_mail ");
+		sql.append(" where received_id = ? ");
+		sql.append(" order by reg_date ");
+		
+		try(
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+		){
+			pstmt.setString(1, userid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				int location = 1;
+				
+				int no = rs.getInt(location++);
+				String title = rs.getString(location++);
+				String id = rs.getString(location++);
+				String regDate = rs.getString(location++);
+				
+				MailVO mail = new MailVO(no, id, title, regDate, userid);
+				mailList.add(mail);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return mailList;
+	}
+
+	public List<MailVO> sendAllMail(String userid) {
+		
+		List<MailVO> mailList = new ArrayList<>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("select no, title, received_id, to_char(reg_date, 'yyyy-mm-dd')reg_date ");
+		sql.append("  from tbl_mail ");
+		sql.append(" where id = ? ");
+		sql.append(" order by reg_date ");
+		
+		try(
+				Connection conn = new ConnectionFactory().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+				){
+			pstmt.setString(1, userid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				int location = 1;
+				
+				int no = rs.getInt(location++);
+				String title = rs.getString(location++);
+				String received_id = rs.getString(location++);
+				String regDate = rs.getString(location++);
+				
+				MailVO mail = new MailVO(no, userid, title, regDate, received_id);
+				mailList.add(mail);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return mailList;
+	}
+	
+	public List<MailVO> favoriteAllMail(String userid) {
+		
+		List<MailVO> mailList = new ArrayList<>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("select no, title, id, to_char(reg_date, 'yyyy-mm-dd')reg_date ");
+		sql.append("  from tbl_mail ");
+		sql.append(" where received_id = ? ");
+		sql.append("   and favorites = 1 ");
+		sql.append(" order by reg_date ");
+		
+		try(
+				Connection conn = new ConnectionFactory().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+				){
+			pstmt.setString(1, userid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				int location = 1;
+				
+				int no = rs.getInt(location++);
+				String title = rs.getString(location++);
+				String id = rs.getString(location++);
+				String regDate = rs.getString(location++);
+				
+				MailVO mail = new MailVO(no, id, title, regDate, userid);
+				mailList.add(mail);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return mailList;
+	}
+	
+	public List<MailVO> binAllMail(String userid) {
+		
+		List<MailVO> mailList = new ArrayList<>();
+		
+		StringBuilder sql = new StringBuilder();
+		sql.append("select no, title, id, to_char(reg_date, 'yyyy-mm-dd')reg_date ");
+		sql.append("  from tbl_mail ");
+		sql.append(" where received_id = ? ");
+		sql.append("   and delete_chk = 0 ");
+		sql.append(" order by reg_date ");
+		
+		try(
+				Connection conn = new ConnectionFactory().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+				){
+			pstmt.setString(1, userid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				
+				int location = 1;
+				
+				int no = rs.getInt(location++);
+				String title = rs.getString(location++);
+				String id = rs.getString(location++);
+				String regDate = rs.getString(location++);
+				
+				MailVO mail = new MailVO(no, id, title, regDate, userid);
+				mailList.add(mail);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return mailList;
+	}
+	
+	
+	
+	
 	public void writemail(MailVO mail) {
 		
 		StringBuilder sql = new StringBuilder();
@@ -64,6 +210,37 @@ public class MailDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public MailVO receivedmail_WEB(int mailNo){
+		MailVO mail = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT no, id, title, contents, TO_CHAR(reg_date, 'YYYY-MM-DD') AS reg_date, received_id ");
+		sql.append("  FROM tbl_mail ");
+		sql.append(" WHERE no = ? ");
+		sql.append("   AND delete_check = 1 ");
+		
+		try (
+				Connection conn = new ConnectionFactory().getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+		){
+			pstmt.setInt(1, mailNo);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int no = rs.getInt("no");
+				String id = rs.getString("id");
+				String title = rs.getString("title");
+				String contents = rs.getString("contents");
+				String reg_date = rs.getString("reg_date");
+				String received_id = rs.getString("received_id");
+				mail = new MailVO(no, id, title, contents, reg_date, received_id);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mail;
 	}
 	
 	public String receivedcont(String inputid, int num) {

@@ -87,7 +87,23 @@ public class MailVO {
 		this.contents = contents;
 		this.received_id = received_id;
 	}
+	
+	public MailVO(int no, String title, String id, String reg_date) {
+		this.no = no;
+		this.title = title;
+		this.id = id;
+		this.reg_date = reg_date;
+	}
 
+	public MailVO(int no, String id, String title, String reg_date, String received_id) {
+		super();
+		this.no = no;
+		this.id = id;
+		this.title = title;
+		this.reg_date = reg_date;
+		this.received_id = received_id;
+	}
+	
 	public MailVO(int no, String id, String title, String contents, String reg_date, String received_id) {
 		super();
 		this.no = no;

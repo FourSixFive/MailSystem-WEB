@@ -20,6 +20,10 @@ public class MailService2 {
 		return dao2.receivedmail(id);
 	}
 	
+	public MailVO receivedmail_WEB(int mailNo) {
+		return dao2.receivedmail_WEB(mailNo);
+	}
+	
 	public String receivedtitle(String id, int num) {
 		return dao2.receivedtitle(id, num);
 	}

@@ -97,7 +97,7 @@ public class MemberDAO {
 	
 	public String findmemberid(String inputname, String inputphone) {
 
-		String foundid = "";
+		String foundid = null;
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT id ");
@@ -125,7 +125,7 @@ public class MemberDAO {
 	
 	public String findmemberpwd(String inputid, String inputname, String inputphone) {
 		
-		String foundpwd = "";
+		String foundpwd = null;
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT id ");

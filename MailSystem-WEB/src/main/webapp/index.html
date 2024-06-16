@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/MailSystem-WEB/resources/js/myJS.js"></script>
+<style>
+	*{
+	    padding: 0;
+	    margin: 0;
+	    border: none;
+	}
+	
+	header{
+		height:230px;
+		background-color: white;
+		text-align: center;
+	}
+	
+	#img{
+		margin:auto;
+		display: block;
+	}
+	
+	body{
+		text-align: center;
+	    font-size: 14px;
+	    font-family: 'Roboto', sans-serif;
+	    background-color: gray;
+	}
+	
+	.login-wrapper{
+	margin: 0 auto;
+    width: 400px;
+    height: 350px;
+    padding: 40px;
+    box-sizing: border-box;
+    background-color: white;
+	border-radius: 30px;    
+	}
+	
+	.login-wrapper > h2{
+	    font-size: 24px;
+	    color: #6A24FE;
+	    margin-bottom: 20px;
+	}
+	
+	#login-form > input{
+	    width: 100%;
+	    height: 48px;
+	    padding: 0 10px;
+	    box-sizing: border-box;
+	    margin-bottom: 16px;
+	    border-radius: 6px;
+	    background-color: #F8F8F8;
+	}
+	
+	#login-form > input::placeholder{
+	    color: #D2D2D2;
+	}
+	
+	#login-form > input[type="submit"]{
+	    color: #fff;
+	    font-size: 16px;
+	    background-color: #6A24FE;
+	    margin-top: 20px;
+	}
+	
+	#login-form > input[type="checkbox"]{
+    display: none;
+	}
+	
+	#login-form > label{
+	    color: #999999;
+	}
+	
+	#login-form input[type="checkbox"] + label{
+	    cursor: pointer;
+	    padding-left: 26px;
+	    background-image: url("checkbox.png");
+	    background-repeat: no-repeat;
+	    background-size: contain;
+	}
+	
+	#login-form input[type="checkbox"]:checked + label{
+	    background-image: url("checkbox-active.png");
+	    background-repeat: no-repeat;
+	    background-size: contain;
+	}
+	
+</style>
+<script>
+	let checkForm = function(){
+		
+		let f = document.login-form
+		
+		if(isNull(f.userid, '아이디를 입력하세요'))return false
+		
+		if(isNull(f.password, '패스워드를 입력하세요'))return false
+		
+		return true
+	}
+</script>
+</head>
+<header>
+	<img src="/MailSystem-WEB/resources/images/MailSystemlogo.png">
+</header>
+<br>
+<br>
+<br>
+<br>
+<br>
+<body>
+    <div class="login-wrapper" id="middle">
+        <h2>Login</h2>
+        <form method="post" action="/MailSystem-WEB/jsp/mailbox/receivedmail.jsp" id="login-form" name="login-form">
+            <input type="text" id="userid" name="userid" placeholder="Email">
+            <input type="password" id ="password" name="password" placeholder="Password">
+            <label for="remember-check">
+                <input type="checkbox" id="remember-check">아이디 저장하기
+            </label>
+            <input type="submit" value="Login">
+        </form>
+            <button onclick="location.href='/MailSystem-WEB/jsp/member/signUpForm.jsp'">회원가입</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button onclick="location.href='/MailSystem-WEB/jsp/member/find.jsp'">ID/PWD 찾기</button>
+    </div>
+</body>
+</html>
